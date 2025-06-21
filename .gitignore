@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# VS Code / JetBrains / Other IDEs
+.vscode/
+.idea/
+
+# Secrets
+.secrets/
+secrets.toml
+*.json
+
+# Streamlit
+.streamlit/config.toml
+.streamlit/secrets.toml
+
+# Render
+render.yaml
+
+# Logs, temp, and env
+*.log
+.env
+.env.*
+
+# OS-specific
+.DS_Store
+Thumbs.db
