@@ -1,15 +1,16 @@
+import os
+import json
 import streamlit as st
 from PIL import Image
 import gspread
-from google.oauth2 import service_account
 from datetime import datetime
+from google.oauth2 import service_account
 
-# --- Auth Setup ---
-creds_dict = dict(st.secrets["google_service_account"])
-creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
+# --- Credential Setup from Render ENV ---
+creds_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT")
+creds_dict = json.loads(creds_json)
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 credentials = service_account.Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
-
 
 # --- Connect to Google Sheet ---
 gc = gspread.authorize(credentials)
@@ -19,11 +20,11 @@ sheet = gc.open_by_url("https://docs.google.com/spreadsheets/d/1ipcHhEb_qhlHRXXZ
 logo = Image.open("logo.png")
 st.set_page_config(page_title="TnBcS Inquiry", page_icon=logo, layout="centered")
 
-# --- Session State for Confirmation ---
+# --- Session State ---
 if 'form_submitted' not in st.session_state:
     st.session_state.form_submitted = False
 
-# --- If Already Submitted ---
+# --- After Submission ---
 if st.session_state.form_submitted:
     st.success("✅ Thank you! Our team will connect with you shortly.")
     st.markdown("You will be redirected to the [TnBcS Home Page](https://tnbcs.framer.website) shortly...")
